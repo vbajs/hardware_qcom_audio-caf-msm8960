@@ -1183,7 +1183,7 @@ status_t AudioHardwareALSA::doRouting(int device, char* useCase)
 #ifdef QCOM_USBAUDIO_ENABLED
         if(!(device & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET) &&
             !(device & AudioSystem::DEVICE_OUT_DGTL_DOCK_HEADSET) &&
-            !(device & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET) &&
+            !(device & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET) &&
              (musbPlaybackState || musbRecordingState)){
                 // mExtOutStream should be initialized before calling route
                 // when switching form USB headset to ExtOut device
@@ -1902,7 +1902,7 @@ AudioHardwareALSA::openInputStream(uint32_t devices,
            if((mCurDevice == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
               (mCurDevice == AudioSystem::DEVICE_OUT_DGTL_DOCK_HEADSET)){
               ALOGD("Routing everything from proxy for voipcall");
-              mALSADevice->route(&(*it), AudioSystem::DEVICE_IN_PROXY, AUDIO_MODE_IN_COMMUNICATION);
+              mALSADevice->route(&(*it), AudioSystem::DEVICE_IN_ALL, AUDIO_MODE_IN_COMMUNICATION);
               ALOGD("enabling VOIP in openInputstream, musbPlaybackState: %d", musbPlaybackState);
               startUsbPlaybackIfNotStarted();
               musbPlaybackState |= USBPLAYBACKBIT_VOIPCALL;
@@ -2117,7 +2117,7 @@ AudioHardwareALSA::openInputStream(uint32_t devices,
             if(mCurDevice == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET ||
                mCurDevice == AudioSystem::DEVICE_OUT_DGTL_DOCK_HEADSET){
                 ALOGD("Routing everything from proxy for VOIP call");
-                route_devices = devices | AudioSystem::DEVICE_IN_PROXY;
+                route_devices = devices | AudioSystem::DEVICE_IN_ALL;
             } else
 #endif
             {
@@ -2125,9 +2125,9 @@ AudioHardwareALSA::openInputStream(uint32_t devices,
             }
         } else {
 #ifdef QCOM_USBAUDIO_ENABLED
-            if(devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET ||
-               devices & AudioSystem::DEVICE_IN_PROXY) {
-                devices |= AudioSystem::DEVICE_IN_PROXY;
+            if(devices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET ||
+               devices & AudioSystem::DEVICE_IN_ALL) {
+                devices |= AudioSystem::DEVICE_IN_ALL;
                 ALOGD("routing everything from proxy");
             }
 #endif
