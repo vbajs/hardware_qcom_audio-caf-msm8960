@@ -2907,17 +2907,7 @@ status_t AudioHardwareALSA::openExtOutput(int device) {
         if(!mExtOutStream) {
             mExtOutStream = mA2dpStream;
         }
-#ifdef QCOM_USBAUDIO_ENABLED
-    } else if (device & AudioSystem::DEVICE_OUT_ALL_USB) {
-        err= openUsbOutput();
-        if(err) {
-            ALOGE("openUsbPOutput failed = %d",err);
-            return err;
-        }
-        if(!mExtOutStream) {
-            mExtOutStream = mUsbStream;
-        }
-#endif
+
     }
     return err;
 }
