@@ -167,7 +167,7 @@ ssize_t AudioStreamOutALSA::write(const void *buffer, size_t bytes)
 #ifdef QCOM_USBAUDIO_ENABLED
                 if((mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
                       (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_DGTL_DOCK_HEADSET)||
-                      (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_PROXY)) {
+                      (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_ALL)) {
                     mHandle->module->route(mHandle, mParent->mCurRxDevice , mParent->mode());
                 }else
 #endif
@@ -177,7 +177,7 @@ ssize_t AudioStreamOutALSA::write(const void *buffer, size_t bytes)
 #ifdef QCOM_USBAUDIO_ENABLED
             } else if((mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
                       (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_DGTL_DOCK_HEADSET)||
-                      (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_PROXY)) {
+                      (mParent->mCurRxDevice & AudioSystem::DEVICE_OUT_ALL)) {
                 mHandle->module->route(mHandle, mParent->mCurRxDevice , mParent->mode());
 #endif
             } else {
@@ -203,7 +203,7 @@ ssize_t AudioStreamOutALSA::write(const void *buffer, size_t bytes)
                 return bytes;
             }
 #ifdef QCOM_USBAUDIO_ENABLED
-            if((mParent->mCurRxDevice == AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET)||
+            if((mParent->mCurRxDevice == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
                    (mParent->mCurRxDevice == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)){
                 if((!strcmp(mHandle->useCase, SND_USE_CASE_VERB_IP_VOICECALL)) ||
                    (!strcmp(mHandle->useCase, SND_USE_CASE_MOD_PLAY_VOIP))) {
