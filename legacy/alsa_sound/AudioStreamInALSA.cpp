@@ -338,9 +338,9 @@ ssize_t AudioStreamInALSA::read(void *buffer, ssize_t bytes)
         if((!strcmp(mHandle->useCase, SND_USE_CASE_VERB_IP_VOICECALL)) ||
             (!strcmp(mHandle->useCase, SND_USE_CASE_MOD_PLAY_VOIP))) {
 #ifdef QCOM_USBAUDIO_ENABLED
-            if((mDevices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET) ||
+            if((mDevices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET) ||
                (mDevices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)) {
-                mHandle->module->route(mHandle, (mDevices | AudioSystem::DEVICE_IN_PROXY) , AUDIO_MODE_IN_COMMUNICATION);
+                mHandle->module->route(mHandle, (mDevices | AudioSystem::DEVICE_IN_ALL) , AUDIO_MODE_IN_COMMUNICATION);
             }else
 #endif
             {
@@ -348,9 +348,9 @@ ssize_t AudioStreamInALSA::read(void *buffer, ssize_t bytes)
             }
         } else {
 #ifdef QCOM_USBAUDIO_ENABLED
-            if((mHandle->devices == AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET)||
+            if((mHandle->devices == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
                (mHandle->devices == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)){
-                mHandle->module->route(mHandle, AudioSystem::DEVICE_IN_PROXY , mParent->mode());
+                mHandle->module->route(mHandle, AudioSystem::DEVICE_IN_ALL , mParent->mode());
             } else
 #endif
             {
@@ -384,7 +384,7 @@ ssize_t AudioStreamInALSA::read(void *buffer, ssize_t bytes)
             return 0;
         }
 #ifdef QCOM_USBAUDIO_ENABLED
-        if((mHandle->devices == AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET)||
+        if((mHandle->devices == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)||
            (mHandle->devices == AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)){
             if((!strcmp(mHandle->useCase, SND_USE_CASE_VERB_IP_VOICECALL)) ||
                (!strcmp(mHandle->useCase, SND_USE_CASE_MOD_PLAY_VOIP))) {
@@ -398,7 +398,7 @@ ssize_t AudioStreamInALSA::read(void *buffer, ssize_t bytes)
         mParent->mLock.unlock();
     }
 #ifdef QCOM_USBAUDIO_ENABLED
-    if(((mDevices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET) ||
+    if(((mDevices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET) ||
        (mDevices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET)) &&
        (!mParent->musbRecordingState)) {
         mParent->mLock.lock();
