@@ -604,10 +604,10 @@ void ALSADevice::switchDevice(alsa_handle_t *handle, uint32_t devices, uint32_t 
                       AudioSystem::DEVICE_IN_BUILTIN_MIC);
 #endif
 #ifdef QCOM_USBAUDIO_ENABLED
-        } else if ((devices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET ) ||
+        } else if ((devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET ) ||
                   (devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET )) {
             devices = devices | (AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET |
-                      AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET);
+                      AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET);
 #endif
         } else if ((devices & AudioSystem::DEVICE_OUT_AUX_DIGITAL) ||
                   (devices & AudioSystem::DEVICE_IN_AUX_DIGITAL)) {
@@ -2082,7 +2082,7 @@ char* ALSADevice::getUCMDevice(uint32_t devices, int input, char *rxDevice)
              else
                  return strdup(SND_USE_CASE_DEV_BTSCO_NB_TX); /* BTSCO TX*/
 #ifdef QCOM_USBAUDIO_ENABLED
-        } else if (devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET) {
+        } else if (devices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET) {
             if ((mCallMode == AUDIO_MODE_IN_CALL) ||
                 (mCallMode == AUDIO_MODE_IN_COMMUNICATION)) {
                 if ((rxDevice != NULL) &&
