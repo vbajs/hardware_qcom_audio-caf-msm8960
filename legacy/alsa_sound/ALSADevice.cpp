@@ -604,8 +604,8 @@ void ALSADevice::switchDevice(alsa_handle_t *handle, uint32_t devices, uint32_t 
                       AudioSystem::DEVICE_IN_BUILTIN_MIC);
 #endif
 #ifdef QCOM_USBAUDIO_ENABLED
-        } else if ((devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET ) ||
-                  (devices & AudioSystem::DEVICE_IN_ANLG_DOCK_HEADSET )) {
+        } else if ((devices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET ) ||
+                  (devices & AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET )) {
             devices = devices | (AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET |
                       AudioSystem::DEVICE_OUT_ANLG_DOCK_HEADSET);
 #endif
